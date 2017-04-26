@@ -43,5 +43,6 @@ int main()
     {
       printf("%.0f speed attainable with a %.0f tooth gear\n",speed_B,teeth_B);
     }
-  
+
+  return 0;
 }
