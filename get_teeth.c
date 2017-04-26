@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <assert.h>
 
 int main()
 {  
@@ -19,13 +20,16 @@ int main()
   
   printf("Enter the speed of the first gear:");
   scanf("%f",&speed_A);
-
+  assert(speed_A>0);
+  
   printf("Enter the speed of the second gear:");
   scanf("%f",&speed_B);
+  assert(speed_B>0);
 
   printf("Enter the number of teeth of the first gear:");
   scanf("%f",&teeth_A);
-
+  assert(teeth_A>0);
+  
   teeth_B=(speed_A*teeth_A)/speed_B;
 
   whole_teeth_B1=(int)teeth_B;
