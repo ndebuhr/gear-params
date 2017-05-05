@@ -1,10 +1,11 @@
 CC=gcc
 FLAGS=-g
 
-all: get_teeth
+all: gear_params
+	./gear_params
 
-get_teeth: get_teeth.c
-	$(CC) -g -o get_teeth get_teeth.c
+gear_params: gear_params.c
+	$(CC) -g -o gear_params gear_params.c
 
 clean:
-	rm get_teeth
+	rm gear_params
