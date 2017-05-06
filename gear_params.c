@@ -22,12 +22,18 @@ int main()
 
 char module_choice(void)
 {
+  int i;
   char user_choice;
   char char_dump;
   bool valid_input;
   char module_options[MODULES][MODULE_PARTS][MODULE_PART_SIZE]=
-    {{"1","Spur Gear Train Design","S"},
-     {"2","Rack and Pinion Design","R"}};
+    {{"S","Spur Gear Train Design"},
+     {"R","Rack and Pinion Design"}};
+
+  // Print current modules available
+  printf("Index | Module Name\n");
+  for (i=0; i<MODULES; i++)
+    printf("%4s  | %s\n",module_options[i][0],module_options[i][1]);
   
   do { // TODO clean this up without \n in buffer issue
     printf("Module to run: ");

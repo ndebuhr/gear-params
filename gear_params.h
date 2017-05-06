@@ -1,7 +1,7 @@
 #include <stdbool.h>
 
 #define MODULES 2
-#define MODULE_PARTS 3
+#define MODULE_PARTS 2
 #define MODULE_PART_SIZE 255
 
 char module_choice(void);
