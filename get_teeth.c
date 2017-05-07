@@ -11,11 +11,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <assert.h>
+#include "get_teeth.h"
 
-void get_teeth(void);
-int calc_output_teeth(float speed_A, float speed_B, float teeth_A, int output_teeth[], float output_speed[]);
-
-void get_teeth()
+void get_teeth(void)
 {  
   float speed_A, speed_B, teeth_A;
   int output_teeth[2]={0,0};
