@@ -16,7 +16,7 @@ int main()
   int module_index;
   module_index=module_choice();
   printf("%c\n",module_index);
-	    
+
   return 0;
 }
 
@@ -44,7 +44,16 @@ char module_choice(void)
     scanf("%c",&char_dump); //dump \n from input buffer
   } while (valid_input==false);
 
-  return user_choice;
+  switch (user_choice)
+    {
+    case 'S':
+      get_teeth();
+      break;
+    default:
+      break;
+    }
+  
+  return 0;
 }
   
 bool module_exists(char user_choice, char module_opt_ptr[MODULES][MODULE_PARTS][MODULE_PART_SIZE], const int num_modules)

@@ -12,11 +12,15 @@
 #include <stdbool.h>
 #include <assert.h>
 
-int main()
+void get_teeth(void);
+int calc_output_teeth(float speed_A, float speed_B, float teeth_A, int output_teeth[], float output_speed[]);
+
+void get_teeth()
 {  
-  float speed_A, speed_B, teeth_A, teeth_B;
-  float whole_speed_B1, whole_speed_B2;
-  int whole_teeth_B1, whole_teeth_B2;
+  float speed_A, speed_B, teeth_A;
+  int output_teeth[2]={0,0};
+  float output_speed[2]={0,0};
+  int output_state;
   
   printf("Enter the speed of the first gear:");
   scanf("%f",&speed_A);
@@ -29,24 +33,35 @@ int main()
   printf("Enter the number of teeth of the first gear:");
   scanf("%f",&teeth_A);
   assert(teeth_A>0);
+
+  output_state=calc_output_teeth(speed_A,speed_B,teeth_A,output_teeth,output_speed);
   
-  teeth_B=(speed_A*teeth_A)/speed_B;
-
-  whole_teeth_B1=(int)teeth_B;
-  whole_speed_B1=(speed_A*teeth_A)/(float)whole_teeth_B1;
-  whole_teeth_B2=(int)teeth_B+1;
-  whole_speed_B2=(speed_A*teeth_A)/(float)whole_teeth_B2;
-
-  if ((float)whole_teeth_B1 != teeth_B)
+  if (output_state==2) //single integer solution does not exist
     {
       printf("Closest possible speeds are:\n");
-      printf("%.0f speed with a %d tooth gear\n",whole_speed_B1,whole_teeth_B1);
-      printf("%.0f speed with a %d tooth gear\n",whole_speed_B2,whole_teeth_B2);
+      printf("%.0f speed with a %d tooth gear\n",output_speed[0],output_teeth[0]);
+      printf("%.0f speed with a %d tooth gear\n",output_speed[1],output_teeth[1]);
     }
-  else
+  else //single integer solution does exist
     {
-      printf("%.0f speed attainable with a %.0f tooth gear\n",speed_B,teeth_B);
+      printf("%.0f speed attainable with a %d tooth gear\n",output_speed[0],output_teeth[0]);
     }
 
-  return 0;
+}
+
+int calc_output_teeth(float speed_A, float speed_B, float teeth_A, int output_teeth[], float output_speed[])
+{
+  float teeth_B;
+  
+  teeth_B=(speed_A*teeth_A)/speed_B;
+  
+  output_teeth[0]=(int)teeth_B;
+  output_speed[0]=(speed_A*teeth_A)/(float)output_teeth[0];
+  output_teeth[1]=(int)teeth_B+1;
+  output_speed[1]=(speed_A*teeth_A)/(float)output_teeth[1];
+
+  if ((float)output_teeth[0] != teeth_B)
+    return 2; //two closest integer values
+  else
+    return 1; //single integer value solves perfectly
 }
