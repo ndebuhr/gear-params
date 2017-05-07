@@ -37,14 +37,18 @@ void get_teeth(void)
   if (output_state==2) //single integer solution does not exist
     {
       printf("Closest possible speeds are:\n");
-      printf("%.0f speed with a %d tooth gear\n",output_speed[0],output_teeth[0]);
-      printf("%.0f speed with a %d tooth gear\n",output_speed[1],output_teeth[1]);
+      printf("%.0f speed with a %d tooth output gear\n",output_speed[0],output_teeth[0]);
+      printf("%.0f speed with a %d tooth output gear\n",output_speed[1],output_teeth[1]);
+      check_num_min(teeth_A);
+      check_num_min(output_teeth[0]);
+      check_num_min(output_teeth[1]);
     }
   else //single integer solution does exist
     {
-      printf("%.0f speed attainable with a %d tooth gear\n",output_speed[0],output_teeth[0]);
-    }
-
+      printf("%.0f speed attainable with a %d tooth output gear\n",output_speed[0],output_teeth[0]);
+      check_num_min(teeth_A);
+      check_num_min(output_teeth[0]);
+    }  
 }
 
 int calc_output_teeth(float speed_A, float speed_B, float teeth_A, int output_teeth[], float output_speed[])
@@ -62,4 +66,10 @@ int calc_output_teeth(float speed_A, float speed_B, float teeth_A, int output_te
     return 2; //two closest integer values
   else
     return 1; //single integer value solves perfectly
+}
+
+void check_num_min(int num_teeth)
+{
+  if (num_teeth < 8)
+    printf("Warning: %d gear teeth is below recommended minimum of 8.\n         Consider scaling all gear teeth numbers with a single multiplier.\n",num_teeth);
 }
