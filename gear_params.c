@@ -50,6 +50,7 @@ char module_choice(void)
       get_teeth();
       break;
     default:
+      rack_pinion();
       break;
     }
   
