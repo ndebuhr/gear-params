@@ -15,38 +15,47 @@
 
 void get_teeth(void)
 {  
-  float speed_A, speed_B, teeth_A;
+  struct spur {
+    float speed;
+    float teeth;
+    int rSpeed;
+    int rTeeth;
+  };
+
+  struct spur driving;
+  struct spur driven;
+  
   int output_teeth[2]={0,0};
   float output_speed[2]={0,0};
   int output_state;
   
   printf("Enter the speed of the first gear:");
-  scanf("%f",&speed_A);
-  assert(speed_A>0);
+  scanf("%f",&driving.speed);
+  assert(driving.speed>0);
   
   printf("Enter the speed of the second gear:");
-  scanf("%f",&speed_B);
-  assert(speed_B>0);
+  scanf("%f",&driven.speed);
+  assert(driven.speed>0);
 
   printf("Enter the number of teeth of the first gear:");
-  scanf("%f",&teeth_A);
-  assert(teeth_A>0);
+  scanf("%f",&driving.teeth);
+  assert(driving.teeth>0);
 
-  output_state=calc_output_teeth(speed_A,speed_B,teeth_A,output_teeth,output_speed);
+  output_state=calc_output_teeth(driving.speed,driven.speed,driving.teeth,output_teeth,output_speed);
   
   if (output_state==2) //single integer solution does not exist
     {
       printf("Closest possible speeds are:\n");
       printf("%.0f speed with a %d tooth output gear\n",output_speed[0],output_teeth[0]);
       printf("%.0f speed with a %d tooth output gear\n",output_speed[1],output_teeth[1]);
-      check_num_min(teeth_A);
+      check_num_min(driving.teeth);
       check_num_min(output_teeth[0]);
       check_num_min(output_teeth[1]);
     }
   else //single integer solution does exist
     {
       printf("%.0f speed attainable with a %d tooth output gear\n",output_speed[0],output_teeth[0]);
-      check_num_min(teeth_A);
+      check_num_min(driving.teeth);
       check_num_min(output_teeth[0]);
     }  
 }

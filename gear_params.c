@@ -11,7 +11,7 @@
 #include <stdbool.h>
 #include "gear_params.h"
 
-int main()
+int main(void)
 {  
   int module_index;
   module_index=module_choice();
