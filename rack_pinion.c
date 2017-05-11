@@ -11,11 +11,12 @@ void rack_pinion(void)
   char toss_char;
   
   for (i=0;i<NUM_PARAMS;i++)
+    printf("Index | Parameter Name\n");    
     printf("%4s  | %s\n",parameters[i][0],parameters[i][1]);
 
   while (valid_param==false)
     {
-      printf("\nUnknown parameter (use single character index): ");
+      printf("\nParameter to solve for (enter index): ");
       scanf("%c",&unknown_choice);
       for (i=0;i<NUM_PARAMS;i++)
 	{
@@ -23,7 +24,7 @@ void rack_pinion(void)
 	    valid_param=true;
 	}
       if (valid_param==false)
-	printf("Invalid chatacter index.  Please input one from list (case sensitive).\n");
+	printf("Invalid index.  Please input an index from list (case sensitive).\n");
       scanf("%c",&toss_char); //toss \n character.  TODO clean this up
     }
 

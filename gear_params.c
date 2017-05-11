@@ -40,7 +40,7 @@ char module_choice(void)
     scanf("%c",&user_choice);
     valid_input=module_exists(user_choice,module_options,MODULES);
     if (valid_input==false)
-      printf("Module number not recognized. Please input one from list.\n");
+      printf("Module index not recognized. Please input one from list.\n");
     scanf("%c",&char_dump); //dump \n from input buffer
   } while (valid_input==false);
 
