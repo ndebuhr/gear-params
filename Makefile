@@ -1,10 +1,7 @@
 CC=gcc
 FLAGS=-g
 
-all: gear_params
-	./gear_params
-
-gear_params: gear_params.o get_teeth.o rack_pinion.o
+all: gear_params.o get_teeth.o rack_pinion.o
 	$(CC) -g -o gear_params gear_params.o get_teeth.o rack_pinion.o
 
 gear_params.o: gear_params.c

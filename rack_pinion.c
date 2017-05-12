@@ -10,8 +10,8 @@ void rack_pinion(void)
   char unknown_choice;
   char toss_char;
   
+  printf("Index | Parameter Name\n");    
   for (i=0;i<NUM_PARAMS;i++)
-    printf("Index | Parameter Name\n");    
     printf("%4s  | %s\n",parameters[i][0],parameters[i][1]);
 
   while (valid_param==false)

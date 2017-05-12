@@ -6,17 +6,38 @@
  * needs, and running corresponding functions
  *************************************************/ 
 
-// TODO move preprocessor constants and function prototypes to header file
 #include <stdio.h>
 #include <stdbool.h>
 #include "gear_params.h"
+#include "get_teeth.h"
+#include "rack_pinion.h"
 
-int main(void)
+int main(int argc, char * argv[])
 {  
-  int module_index;
-  module_index=module_choice();
-  printf("%c\n",module_index);
+  char module_index;
 
+  if (argc>1)
+    {
+      if (argv[1][0]=='S' || argv[1][0]=='R') //TODO make this more scalable/clean
+	module_index=argv[1][0];
+      else
+	printf("Command line module designation not recognized\n");
+    }
+  else
+    module_index=module_choice();
+
+  switch (module_index)
+    {
+    case 'S':
+      get_teeth();
+      break;
+    case 'R':
+      rack_pinion();
+      break;
+    default:
+      break;
+    }
+  
   return 0;
 }
 
@@ -43,18 +64,8 @@ char module_choice(void)
       printf("Module index not recognized. Please input one from list.\n");
     scanf("%c",&char_dump); //dump \n from input buffer
   } while (valid_input==false);
-
-  switch (user_choice)
-    {
-    case 'S':
-      get_teeth();
-      break;
-    default:
-      rack_pinion();
-      break;
-    }
   
-  return 0;
+  return user_choice;
 }
   
 bool module_exists(char user_choice, char module_opt_ptr[MODULES][MODULE_PARTS][MODULE_PART_SIZE], const int num_modules)
