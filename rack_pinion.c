@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <assert.h>
 #include "rack_pinion.h"
+
 
 void rack_pinion(void)
 {  
@@ -9,6 +11,7 @@ void rack_pinion(void)
   bool valid_param=false;
   char unknown_choice;
   char toss_char;
+  float result;
   
   printf("Index | Parameter Name\n");    
   for (i=0;i<NUM_PARAMS;i++)
@@ -28,6 +31,29 @@ void rack_pinion(void)
       scanf("%c",&toss_char); //toss \n character.  TODO clean this up
     }
 
+  result=solve_rack_pinion(&unknown_choice);
+  printf("%f\n",result);
   printf("%c\n",unknown_choice);
   
 }
+
+float solve_rack_pinion(char * unknown)
+{
+  switch (*unknown) {
+  case 'N' : //number of teeth
+    // (S*1000)/(pi*P)
+    return 1;
+    break;
+  case 'P' : //pitch diameter of pinion
+    // (S*1000)/(pi*N)
+    return 2;
+    break;
+  case 'S' : //surface speed
+    // (pi*P*N)/1000
+    return 3;
+    break;
+  default : //not recognized
+    assert(*unknown!='N' || *unknown!='P' || *unknown!='S');
+  }
+}
+  
