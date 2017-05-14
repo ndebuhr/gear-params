@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <math.h>
 #include "rack_pinion.h"
 
 
@@ -32,28 +33,66 @@ void rack_pinion(void)
     }
 
   result=solve_rack_pinion(&unknown_choice);
-  printf("%f\n",result);
-  printf("%c\n",unknown_choice);
-  
+  printf("Computed value for %c is %f\n",unknown_choice,result);  
 }
 
 float solve_rack_pinion(char * unknown)
 {
+  float nVal;
+  float pVal;
+  float sVal;
+  float pi=(float)M_PI;
+
   switch (*unknown) {
   case 'N' : //number of teeth
-    // (S*1000)/(pi*P)
-    return 1;
+    sVal=get_s();
+    pVal=get_p();
+    nVal=(sVal*1000)/(pi*pVal);
+    return nVal;
     break;
   case 'P' : //pitch diameter of pinion
-    // (S*1000)/(pi*N)
-    return 2;
+    sVal=get_s();
+    nVal=get_n();
+    pVal=(sVal*1000)/(pi*nVal);
+    return pVal;
     break;
   case 'S' : //surface speed
-    // (pi*P*N)/1000
-    return 3;
+    pVal=get_p();
+    nVal=get_n();
+    sVal=(pi*pVal*nVal)/1000;
+    return sVal;
     break;
   default : //not recognized
     assert(*unknown!='N' || *unknown!='P' || *unknown!='S');
   }
 }
+
+float get_n(void)
+{
+  float N;
   
+  printf("Provide a value for N (number of teeth): ");
+  scanf("%f",&N);
+  assert(N>0);
+  return N;
+}
+
+float get_p(void)
+{
+  float P;
+  
+  printf("Provide a value for P (pitch diameter of pinion): ");
+  scanf("%f",&P);
+  assert(P>0);
+  return P;
+}
+
+float get_s(void)
+{
+  float S;
+  
+  printf("Provide a value for S (surface speed of rack): ");
+  scanf("%f",&S);
+  assert(S>0);
+  return S;
+}
