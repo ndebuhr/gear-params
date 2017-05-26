@@ -1,5 +1,5 @@
 /************************************************
- * Filename: get_teeth.c
+ * Filename: spur_gears.c
  * Neal DeBuhr
  *
  * Description: Determines the gear teeth needed
@@ -11,9 +11,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <assert.h>
-#include "get_teeth.h"
+#include "spur_gears.h"
 
-void get_teeth(void)
+void spur_gears(void)
 {  
   struct spur {
     float speed;

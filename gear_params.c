@@ -10,7 +10,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "gear_params.h"
-#include "get_teeth.h"
+#include "spur_gears.h"
 #include "rack_pinion.h"
 #include "worm_gear.h"
 
@@ -25,7 +25,7 @@ int main(int argc, char * argv[])
   };
   struct mod_struct mod_spur_gear, mod_rack_pinion, mod_worm_gear;
   mod_spur_gear.mod_ind='S';
-  mod_spur_gear.mod_func=&get_teeth;
+  mod_spur_gear.mod_func=&spur_gears;
   mod_rack_pinion.mod_ind='R';
   mod_rack_pinion.mod_func=&rack_pinion;
   mod_worm_gear.mod_ind='W';
