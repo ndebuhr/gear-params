@@ -1,13 +1,14 @@
 /************************************************
- * Filename: gear_params.c
+ * Gear design system
  * Neal DeBuhr
  *
  * Description: Central file for determining user
- * needs, and running corresponding functions
+ * needs, and running corresponding modules
  *************************************************/ 
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 #include "gear_params.h"
 #include "get_teeth.h"
 #include "rack_pinion.h"
@@ -16,16 +17,24 @@
 int main(int argc, char * argv[])
 {  
   char module_index;
-
+  int i;
+  bool mod_specified=false;
+  
   if (argc>1)
     {
-      if (argv[1][0]=='-')
-	module_index=module_choice(argv[1][1]);
-      else
-	module_index=module_choice('\0'); //command line module selection incorrectly formatted (ignore it)
+      for (i=1; i<argc; i++)
+	{
+	  if ( strcmp(argv[i],"-m") == 0)
+	    {
+	      module_index = ((i+1<argc) ? module_choice(argv[i+1][0]) : module_choice('\0'));
+	      mod_specified = true;
+	    }
+	}
+      if (mod_specified==false)
+	module_index=module_choice('\0'); //command line module specification incorrectly formatted (ignore it)
     }
   else
-    module_index=module_choice('\0'); //command line module selection not specified
+    module_index=module_choice('\0'); //command line module not specified
 
   switch (module_index)
     {
