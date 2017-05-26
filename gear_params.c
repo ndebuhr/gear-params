@@ -19,6 +19,18 @@ int main(int argc, char * argv[])
   char module_index;
   int i;
   bool mod_specified=false;
+  struct mod_struct {
+    char mod_ind;
+    void (*mod_func)(void);
+  };
+  struct mod_struct mod_spur_gear, mod_rack_pinion, mod_worm_gear;
+  mod_spur_gear.mod_ind='S';
+  mod_spur_gear.mod_func=&get_teeth;
+  mod_rack_pinion.mod_ind='R';
+  mod_rack_pinion.mod_func=&rack_pinion;
+  mod_worm_gear.mod_ind='W';
+  mod_worm_gear.mod_func=&worm_gear;
+  struct mod_struct modules[MODULES]={mod_spur_gear, mod_rack_pinion, mod_worm_gear};
   
   if (argc>1)
     {
@@ -26,7 +38,7 @@ int main(int argc, char * argv[])
 	{
 	  if ( strcmp(argv[i],"-m") == 0)
 	    {
-	      module_index = ((i+1<argc) ? module_choice(argv[i+1][0]) : module_choice('\0'));
+	      module_index = ((i+1<argc) ? module_choice(argv[i+1][0]) : module_choice('\0')); //if flag, then ignore, if option, then read
 	      mod_specified = true;
 	    }
 	}
@@ -36,19 +48,10 @@ int main(int argc, char * argv[])
   else
     module_index=module_choice('\0'); //command line module not specified
 
-  switch (module_index)
+  for (i=0; i<MODULES; i++)
     {
-    case 'S':
-      get_teeth();
-      break;
-    case 'R':
-      rack_pinion();
-      break;
-    case 'W':
-      worm_gear();
-      break;
-    default:
-      break;
+      if (module_index==modules[i].mod_ind) //if specified module matches the ith module index
+	(*modules[i].mod_func)(); //run corresponding module function
     }
   
   return 0;
