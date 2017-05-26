@@ -1,2 +1,2 @@
 # gear-params
-Program for calculating drive train and actuator parameters for mechanical design
+Program for calculation of gearing/actuator kinematic parameters for mechanical design
