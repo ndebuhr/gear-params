@@ -29,7 +29,7 @@ void worm_gear(void)
 	}
       if (valid_param==false)
 	printf("Invalid index.  Please input an index from list (case sensitive).\n");
-      scanf("%c",&toss_char); //toss \n character.  TODO clean this up
+      while (getchar()!='\n'); //clear stdin buffer
     }
 
   result=1.0;

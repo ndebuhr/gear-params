@@ -20,8 +20,8 @@ int main(int argc, char * argv[])
   int i;
   bool mod_specified=false;
   struct mod_struct {
-    char mod_ind;
-    void (*mod_func)(void);
+    char mod_ind; //character index for module
+    void (*mod_func)(void); //associated module function
   };
   struct mod_struct mod_spur_gear, mod_rack_pinion, mod_worm_gear;
   mod_spur_gear.mod_ind='S';
@@ -83,7 +83,7 @@ char module_choice(char predet)
       user_choice=predet;
     }
   
-  do { // TODO clean this up without \n in buffer issue
+  do {
     valid_input=module_exists(user_choice,module_options,MODULES);
     if (valid_input==false)
       {
