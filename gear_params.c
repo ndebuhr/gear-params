@@ -11,6 +11,7 @@
 #include "gear_params.h"
 #include "get_teeth.h"
 #include "rack_pinion.h"
+#include "worm_gear.h"
 
 int main(int argc, char * argv[])
 {  
@@ -34,6 +35,9 @@ int main(int argc, char * argv[])
     case 'R':
       rack_pinion();
       break;
+    case 'W':
+      worm_gear();
+      break;
     default:
       break;
     }
@@ -49,7 +53,8 @@ char module_choice(char predet)
   bool valid_input;
   char module_options[MODULES][MODULE_PARTS][MODULE_PART_SIZE]=
     {{"S","Spur Gear Train Design"},
-     {"R","Rack and Pinion Design"}};
+     {"R","Rack and Pinion Design"},
+     {"W","Worm Gear Design"}};
 
   if (predet=='\0')
     {
