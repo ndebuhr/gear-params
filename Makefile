@@ -1,8 +1,8 @@
 CC=gcc
 FLAGS=-g
 
-all: gear_params.o spur_gears.o rack_pinion.o worm_gear.o
-	$(CC) -g -o gear_params gear_params.o spur_gears.o rack_pinion.o worm_gear.o
+all: gear_params.o spur_gears.o rack_pinion.o worm_gear.o metric_US.o
+	$(CC) -g -o gear_params gear_params.o spur_gears.o rack_pinion.o worm_gear.o metric_US.o
 
 gear_params.o: gear_params.c
 	$(CC) -g -c -o gear_params.o gear_params.c
@@ -16,5 +16,8 @@ rack_pinion.o: rack_pinion.c
 worm_gear.o: worm_gear.c
 	$(CC) -g -c -o worm_gear.o worm_gear.c
 
+metric_US.o: metric_US.c
+	$(CC) -g -c -o metric_US.o metric_US.c
+
 clean:
-	rm gear_params gear_params.o spur_gears.o rack_pinion.o worm_gear.o
+	rm gear_params gear_params.o spur_gears.o rack_pinion.o worm_gear.o metric_US.o

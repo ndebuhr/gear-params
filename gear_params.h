@@ -1,6 +1,6 @@
 #include <stdbool.h>
 
-#define MODULES 3
+#define MODULES 4
 #define MODULE_PARTS 2
 #define MODULE_PART_SIZE 256
 
