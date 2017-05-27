@@ -11,7 +11,6 @@ void worm_gear(void)
   char parameters[WORM_PARAMS][2][64]={{"1","Wormgear Param 1"},{"2","Wormgear Param 2"},{"3","Wormgear Param 3"}};
   bool valid_param=false;
   char unknown_choice;
-  char toss_char;
   float result;
   
   printf("Index | Parameter Name\n");    

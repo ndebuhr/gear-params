@@ -1,3 +1,5 @@
+#define SPUR_PARAMS 4
 void spur_gears(void);
-int calc_output_teeth(float speed_A, float speed_B, float teeth_A, int output_teeth[], float output_speed[]);
+void calc_speed(float inN, float outN, float known_speed, bool unknown_is_driven);
+void calc_teeth(float in_speed, float out_speed, float known_teeth, bool unknown_is_driven);
 void check_num_min(int num_teeth);
