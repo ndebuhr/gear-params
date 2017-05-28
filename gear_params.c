@@ -21,9 +21,10 @@ int main(int argc, char * argv[])
   int i;
   int j=0;
   bool mod_specified=false;
+  bool in_file_specified=false;
   struct mod_struct {
     char mod_ind; //character index for module
-    void (*mod_func)(void); //associated module function
+    void (*mod_func)(char *); //associated module function
   };
   struct mod_struct mod_spur_gear, mod_rack_pinion, mod_worm_gear,
     mod_metric_US;
@@ -57,6 +58,7 @@ int main(int argc, char * argv[])
 		  }
 		  input_file[j]='\0';
 		  printf("Input file: %s\n",input_file);
+		  in_file_specified=true;
 		}
 	    }
 	}
@@ -66,10 +68,13 @@ int main(int argc, char * argv[])
   else
     module_index=module_choice('\0'); //command line module not specified
 
+  if (in_file_specified==false)
+    strcpy(input_file, "Does Not Exist");
+    
   for (i=0; i<MODULES; i++)
     {
       if (module_index==modules[i].mod_ind) //if specified module matches the ith module index
-	(*modules[i].mod_func)(); //run corresponding module function
+	(*modules[i].mod_func)(input_file); //run corresponding module function
     }
   
   return 0;

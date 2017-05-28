@@ -5,7 +5,7 @@
 #include "rack_pinion.h"
 
 
-void rack_pinion(void)
+void rack_pinion(char * input_file)
 {  
   int i;
   char parameters[NUM_PARAMS][2][64]={{"N","Number of Teeth"},{"P","Pitch Diameter of Pinion"},{"S","Surface Speed"}};

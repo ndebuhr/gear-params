@@ -13,7 +13,7 @@
 #include <assert.h>
 #include "spur_gears.h"
 
-void spur_gears(void)
+void spur_gears(char * input_file)
 {  
   struct spur {
     float speed;

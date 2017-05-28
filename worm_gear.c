@@ -5,7 +5,7 @@
 #include "worm_gear.h"
 
 
-void worm_gear(void)
+void worm_gear(char * input_file)
 {  
   int i;
   char parameters[WORM_PARAMS][2][64]={{"1","Wormgear Param 1"},{"2","Wormgear Param 2"},{"3","Wormgear Param 3"}};

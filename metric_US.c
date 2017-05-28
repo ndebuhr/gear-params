@@ -5,7 +5,7 @@
 #include "metric_US.h"
 
 
-void metric_US(void)
+void metric_US(char * input_file)
 {  
   int i;
   char parameters[UNIT_PARAMS][2][64]={{"M","Module (Metric)"},{"P","Diametral Pitch (US)"}};
