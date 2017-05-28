@@ -19,6 +19,7 @@ int main(int argc, char * argv[])
 {  
   char module_index;
   int i;
+  int j=0;
   bool mod_specified=false;
   struct mod_struct {
     char mod_ind; //character index for module
@@ -35,6 +36,7 @@ int main(int argc, char * argv[])
   mod_metric_US.mod_ind='U';
   mod_metric_US.mod_func=&metric_US;
   struct mod_struct modules[MODULES]={mod_spur_gear, mod_rack_pinion, mod_worm_gear, mod_metric_US};
+  char input_file[FILE_NAME_LEN];
   
   if (argc>1)
     {
@@ -44,6 +46,18 @@ int main(int argc, char * argv[])
 	    {
 	      module_index = ((i+1<argc) ? module_choice(argv[i+1][0]) : module_choice('\0')); //if flag, then ignore, if option, then read
 	      mod_specified = true;
+	    }
+	  if ( strcmp(argv[i],"-i") == 0)
+	    {
+	      if (i+1<argc)
+		{
+		  while (argv[i+1][j]!='\0') {
+		    input_file[j]=argv[i+1][j];
+		    j++;
+		  }
+		  input_file[j]='\0';
+		  printf("Input file: %s\n",input_file);
+		}
 	    }
 	}
       if (mod_specified==false)
