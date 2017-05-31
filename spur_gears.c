@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <string.h>
 #include "spur_gears.h"
 
 void spur_gears(char * input_file)
@@ -29,54 +30,43 @@ void spur_gears(char * input_file)
   bool valid_param=false;
   char unknown_choice;
   int i;
-  
-  printf("Index | Parameter Name\n");    
-  for (i=0;i<SPUR_PARAMS;i++)
-    printf("%4s  | %s\n",parameters[i][0],parameters[i][1]);
 
-
-  while (valid_param==false)
+  if (strcmp(input_file,"Does Not Exist")==0)
     {
-      printf("\nParameter to solve for (enter index): ");
-      scanf("%c",&unknown_choice);
+      printf("Index | Parameter Name\n");    
       for (i=0;i<SPUR_PARAMS;i++)
+	printf("%4s  | %s\n",parameters[i][0],parameters[i][1]);
+      unknown_choice=pick_unknown(parameters);
+
+      if (unknown_choice != 'A')
 	{
-	  if (unknown_choice==parameters[i][0][0])
-	    valid_param=true;
+	  printf("Enter the speed of the driving gear:");
+	  scanf("%f",&driving.speed);
+	  assert(driving.speed>0);
 	}
-      if (valid_param==false)
-	printf("Invalid index.  Please input an index from list (case sensitive).\n");
-      while (getchar()!='\n'); //clear stdin buffer
+      
+      if (unknown_choice != 'B')
+	{
+	  printf("Enter the number of teeth of the driving gear:");
+	  scanf("%f",&driving.teeth);
+	  assert(driving.teeth>0);
+	}
+      
+      if (unknown_choice != 'C')
+	{
+	  printf("Enter the speed of the driven gear:");
+	  scanf("%f",&driven.speed);
+	  assert(driven.speed>0);
+	}
+      
+      if (unknown_choice != 'D')
+	{
+	  printf("Enter the number of teeth of the driven gear:");
+	  scanf("%f",&driven.teeth);
+	  assert(driven.teeth>0);
+	}
     }
-
-  if (unknown_choice != 'A')
-    {
-      printf("Enter the speed of the driving gear:");
-      scanf("%f",&driving.speed);
-      assert(driving.speed>0);
-    }
-
-  if (unknown_choice != 'B')
-    {
-      printf("Enter the number of teeth of the driving gear:");
-      scanf("%f",&driving.teeth);
-      assert(driving.teeth>0);
-    }
-
-  if (unknown_choice != 'C')
-    {
-      printf("Enter the speed of the driven gear:");
-      scanf("%f",&driven.speed);
-      assert(driven.speed>0);
-    }
-
-  if (unknown_choice != 'D')
-    {
-      printf("Enter the number of teeth of the driven gear:");
-      scanf("%f",&driven.teeth);
-      assert(driven.teeth>0);
-    }
-  
+      
   switch (unknown_choice) {
   case 'A':
     calc_speed(driving.teeth, driven.teeth, driven.speed, false);
@@ -164,4 +154,27 @@ void check_num_min(int num_teeth)
 {
   if (num_teeth < 8)
     printf("Warning: %d gear teeth is below recommended minimum of 8.\n         Consider scaling all gear teeth numbers with a single multiplier.\n",num_teeth);
+}
+
+char pick_unknown(char parameters[SPUR_PARAMS][2][64])
+{
+  int i;
+  bool valid_param=false;
+  char unknown_choice;
+  
+  while (valid_param==false)
+    {
+      printf("\nParameter to solve for (enter index): ");
+      scanf("%c",&unknown_choice);
+      for (i=0;i<SPUR_PARAMS;i++)
+	{
+	  if (unknown_choice==parameters[i][0][0])
+	    valid_param=true;
+	}
+      if (valid_param==false)
+	printf("Invalid index.  Please input an index from list (case sensitive).\n");
+      while (getchar()!='\n'); //clear stdin buffer
+    }
+
+  return unknown_choice;
 }
