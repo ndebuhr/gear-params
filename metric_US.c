@@ -37,12 +37,14 @@ void metric_US(char * input_file)
     printf("Diametral pitch: ");
     scanf("%lf",&dia_pitch);
     met_module=25.4/dia_pitch;
+    assert(dia_pitch>0);
     printf("Module is %f\n",met_module);
     break;
   case 'P' :
     printf("Module: ");
     scanf("%lf",&met_module);
     dia_pitch=25.4/met_module;
+    assert(met_module>0);
     printf("Diametral pitch is %f\n",dia_pitch);
     break;
   }

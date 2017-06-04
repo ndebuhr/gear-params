@@ -73,7 +73,7 @@ float get_n(void)
   
   printf("Provide a value for N (number of teeth): ");
   scanf("%f",&N);
-  assert(N>0);
+  assert(N>7);
   return N;
 }
 
