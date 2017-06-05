@@ -71,6 +71,7 @@ int main(int argc, char * argv[])
     module_index=module_choice('\0'); //command line module not specified
 
   if (in_file_specified==false)
+    input_file = (char *)calloc(strlen("Does Not Exist")+1,sizeof(char));
     strcpy(input_file, "Does Not Exist");
     
   for (i=0; i<MODULES; i++)
