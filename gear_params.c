@@ -53,7 +53,7 @@ int main(int argc, char * argv[])
 	    {
 	      if (i+1<argc)
 		{
-		  input_file = (char *)calloc(strlen(argv[i+1]),sizeof(char));
+		  input_file = (char *)calloc(strlen(argv[i+1])+1,sizeof(char));
 		  while (argv[i+1][j]!='\0') {
 		    input_file[j]=argv[i+1][j];
 		    j++;
