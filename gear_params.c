@@ -7,6 +7,7 @@
  *************************************************/ 
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
 #include "gear_params.h"
@@ -37,7 +38,7 @@ int main(int argc, char * argv[])
   mod_metric_US.mod_ind='U';
   mod_metric_US.mod_func=&metric_US;
   struct mod_struct modules[MODULES]={mod_spur_gear, mod_rack_pinion, mod_worm_gear, mod_metric_US};
-  char input_file[FILE_NAME_LEN];
+  char * input_file;
   
   if (argc>1)
     {
@@ -52,6 +53,7 @@ int main(int argc, char * argv[])
 	    {
 	      if (i+1<argc)
 		{
+		  input_file = (char *)calloc(strlen(argv[i+1]),sizeof(char));
 		  while (argv[i+1][j]!='\0') {
 		    input_file[j]=argv[i+1][j];
 		    j++;
@@ -76,7 +78,8 @@ int main(int argc, char * argv[])
       if (module_index==modules[i].mod_ind) //if specified module matches the ith module index
 	(*modules[i].mod_func)(input_file); //run corresponding module function
     }
-  
+
+  free(input_file);
   return 0;
 }
 
