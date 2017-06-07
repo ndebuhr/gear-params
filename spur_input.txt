@@ -1,4 +1,4 @@
-A=330;
-B=32;
-C=?;
-D=62;
+driving.teeth 64
+driving.speed 62
+driven.teeth 32
+driven.speed ?

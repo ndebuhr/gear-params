@@ -9,6 +9,7 @@
  *************************************************/ 
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h>
 #include <string.h>
@@ -23,6 +24,10 @@ void spur_gears(char * input_file)
     int rTeeth;
   };
 
+  FILE * fp;
+  char file_str[INPUT_FILE_LINE];
+  char * line_parse;
+  
   struct spur driving;
   struct spur driven;
 
@@ -65,6 +70,22 @@ void spur_gears(char * input_file)
 	  scanf("%f",&driven.teeth);
 	  assert(driven.teeth>0);
 	}
+    }
+  else
+    {
+      fp = fopen(input_file, "r"); //open file in read only
+      while(fgets(file_str,INPUT_FILE_LINE,fp))
+	{
+	  printf("%s",file_str);
+	  line_parse = (char *)calloc(strlen(file_str)+1,sizeof(char));
+	  i=0;
+	  while(file_str[i++]!=' ')
+	    line_parse[i]=file_str[i];
+	  line_parse[i]='\0';
+	  printf("%s",line_parse);
+	  free(line_parse);
+	}
+      fclose(fp);
     }
       
   switch (unknown_choice) {
