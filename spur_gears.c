@@ -105,13 +105,13 @@ void spur_gears(char * input_file)
 	      val_parse[j]='\0';
 	      printf("%s\n",val_parse);
 	      if (strcmp(var_parse,"driving.speed")==0)
-		driving.speed=(float)val_parse;
+		driving.speed=atof(val_parse);
 	      if (strcmp(var_parse,"driving.teeth")==0)
-		driving.teeth=(float)val_parse;
+		driving.teeth=atof(val_parse);
 	      if (strcmp(var_parse,"driven.speed")==0)
-		driven.speed=(float)val_parse;
+		driven.speed=atof(val_parse);
 	      if (strcmp(var_parse,"driven.teeth")==0)
-		driven.teeth=(float)val_parse;
+		driven.teeth=atof(val_parse);
 	    }
 	  printf("%s\n",var_parse);
 	  free(var_parse);
