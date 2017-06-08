@@ -26,7 +26,8 @@ void spur_gears(char * input_file)
 
   FILE * fp;
   char file_str[INPUT_FILE_LINE];
-  char * line_parse;
+  char * var_parse;
+  char * val_parse;
   
   struct spur driving;
   struct spur driven;
@@ -34,7 +35,7 @@ void spur_gears(char * input_file)
   char parameters[SPUR_PARAMS][2][64]={{"A","Driving Gear Speed"},{"B","Driving Gear Number of Teeth"},{"C","Driven Gear Speed"},{"D","Driven Gear Number of Teeth"}};
   bool valid_param=false;
   char unknown_choice;
-  int i;
+  int i, j;
 
   if (strcmp(input_file,"Does Not Exist")==0)
     {
@@ -77,13 +78,43 @@ void spur_gears(char * input_file)
       while(fgets(file_str,INPUT_FILE_LINE,fp))
 	{
 	  printf("%s",file_str);
-	  line_parse = (char *)calloc(strlen(file_str)+1,sizeof(char));
+	  var_parse = (char *)calloc(strlen(file_str)+1,sizeof(char));
+	  val_parse = (char *)calloc(strlen(file_str)+1,sizeof(char));
 	  i=0;
-	  while(file_str[i++]!=' ')
-	    line_parse[i]=file_str[i];
-	  line_parse[i]='\0';
-	  printf("%s",line_parse);
-	  free(line_parse);
+	  while(file_str[i]!=' ')
+	    var_parse[i]=file_str[i++];
+	  var_parse[i]='\0';
+	  i++;
+	  if (file_str[i]=='?')
+	    {
+	      if (strcmp(var_parse,"driving.speed")==0)
+		unknown_choice='A';
+	      if (strcmp(var_parse,"driving.teeth")==0)
+		unknown_choice='B';
+	      if (strcmp(var_parse,"driven.speed")==0)
+		unknown_choice='C';
+	      if (strcmp(var_parse,"driven.teeth")==0)
+		unknown_choice='C';
+	      printf("Unknown choice is %c\n",unknown_choice);
+	    }
+	  else
+	    {
+	      j=0;
+	      while(file_str[i]!='\0')
+		val_parse[j++]=file_str[i++];
+	      val_parse[j]='\0';
+	      printf("%s\n",val_parse);
+	      if (strcmp(var_parse,"driving.speed")==0)
+		driving.speed=(float)val_parse;
+	      if (strcmp(var_parse,"driving.teeth")==0)
+		driving.teeth=(float)val_parse;
+	      if (strcmp(var_parse,"driven.speed")==0)
+		driven.speed=(float)val_parse;
+	      if (strcmp(var_parse,"driven.teeth")==0)
+		driven.teeth=(float)val_parse;
+	    }
+	  printf("%s\n",var_parse);
+	  free(var_parse);
 	}
       fclose(fp);
     }
