@@ -24,11 +24,6 @@ void spur_gears(char * input_file)
     int rTeeth;
   };
 
-  FILE * fp;
-  char file_str[INPUT_FILE_LINE];
-  char * var_parse;
-  char * val_parse;
-  
   struct spur driving;
   struct spur driven;
 
@@ -38,86 +33,9 @@ void spur_gears(char * input_file)
   int i, j;
 
   if (strcmp(input_file,"Does Not Exist")==0)
-    {
-      printf("Index | Parameter Name\n");    
-      for (i=0;i<SPUR_PARAMS;i++)
-	printf("%4s  | %s\n",parameters[i][0],parameters[i][1]);
-      unknown_choice=pick_unknown(parameters);
-
-      if (unknown_choice != 'A')
-	{
-	  printf("Enter the speed of the driving gear:");
-	  scanf("%f",&driving.speed);
-	  assert(driving.speed>0);
-	}
-      
-      if (unknown_choice != 'B')
-	{
-	  printf("Enter the number of teeth of the driving gear:");
-	  scanf("%f",&driving.teeth);
-	  assert(driving.teeth>0);
-	}
-      
-      if (unknown_choice != 'C')
-	{
-	  printf("Enter the speed of the driven gear:");
-	  scanf("%f",&driven.speed);
-	  assert(driven.speed>0);
-	}
-      
-      if (unknown_choice != 'D')
-	{
-	  printf("Enter the number of teeth of the driven gear:");
-	  scanf("%f",&driven.teeth);
-	  assert(driven.teeth>0);
-	}
-    }
+    interactive_parse(parameters,&unknown_choice,&driving.speed,&driving.teeth,&driven.speed,&driven.teeth);
   else
-    {
-      fp = fopen(input_file, "r"); //open file in read only
-      while(fgets(file_str,INPUT_FILE_LINE,fp))
-	{
-	  printf("%s",file_str);
-	  var_parse = (char *)calloc(strlen(file_str)+1,sizeof(char));
-	  val_parse = (char *)calloc(strlen(file_str)+1,sizeof(char));
-	  i=0;
-	  while(file_str[i]!=' ')
-	    var_parse[i]=file_str[i++];
-	  var_parse[i]='\0';
-	  i++;
-	  if (file_str[i]=='?')
-	    {
-	      if (strcmp(var_parse,"driving.speed")==0)
-		unknown_choice='A';
-	      if (strcmp(var_parse,"driving.teeth")==0)
-		unknown_choice='B';
-	      if (strcmp(var_parse,"driven.speed")==0)
-		unknown_choice='C';
-	      if (strcmp(var_parse,"driven.teeth")==0)
-		unknown_choice='C';
-	      printf("Unknown choice is %c\n",unknown_choice);
-	    }
-	  else
-	    {
-	      j=0;
-	      while(file_str[i]!='\0')
-		val_parse[j++]=file_str[i++];
-	      val_parse[j]='\0';
-	      printf("%s\n",val_parse);
-	      if (strcmp(var_parse,"driving.speed")==0)
-		driving.speed=atof(val_parse);
-	      if (strcmp(var_parse,"driving.teeth")==0)
-		driving.teeth=atof(val_parse);
-	      if (strcmp(var_parse,"driven.speed")==0)
-		driven.speed=atof(val_parse);
-	      if (strcmp(var_parse,"driven.teeth")==0)
-		driven.teeth=atof(val_parse);
-	    }
-	  printf("%s\n",var_parse);
-	  free(var_parse);
-	}
-      fclose(fp);
-    }
+    file_parse(input_file,&unknown_choice,&driving.speed,&driving.teeth,&driven.speed,&driven.teeth);
       
   switch (unknown_choice) {
   case 'A':
@@ -229,4 +147,104 @@ char pick_unknown(char parameters[SPUR_PARAMS][2][64])
     }
 
   return unknown_choice;
+}
+
+void interactive_parse(char parameters[SPUR_PARAMS][2][64], char * ptr_unknown_choice, float * driving_speed, float * driving_teeth, float * driven_speed, float * driven_teeth)
+{
+  int i;
+  
+  printf("Index | Parameter Name\n");    
+  for (i=0;i<SPUR_PARAMS;i++)
+    printf("%4s  | %s\n",parameters[i][0],parameters[i][1]);
+  *ptr_unknown_choice=pick_unknown(parameters);
+  
+  if (*ptr_unknown_choice != 'A')
+    {
+      printf("Enter the speed of the driving gear:");
+      scanf("%f",driving_speed);
+      assert(*driving_speed>0);
+    }
+  
+  if (*ptr_unknown_choice != 'B')
+    {
+      printf("Enter the number of teeth of the driving gear:");
+      scanf("%f",driving_teeth);
+      assert(*driving_teeth>0);
+    }
+  
+  if (*ptr_unknown_choice != 'C')
+    {
+      printf("Enter the speed of the driven gear:");
+      scanf("%f",driven_speed);
+      assert(*driven_speed>0);
+    }
+  
+  if (*ptr_unknown_choice != 'D')
+    {
+      printf("Enter the number of teeth of the driven gear:");
+      scanf("%f",driven_teeth);
+      assert(*driven_teeth>0);
+    }
+}
+
+void file_parse(char * input_file, char * ptr_unknown_choice, float * driving_speed, float * driving_teeth, float * driven_speed, float * driven_teeth)
+{
+  FILE * fp;
+  char file_str[INPUT_FILE_LINE];
+  char * var_parse;
+  char * val_parse;
+  int i, j;
+  
+  fp = fopen(input_file, "r"); //open file in read only
+  while(fgets(file_str,INPUT_FILE_LINE,fp))
+    {
+      var_parse = (char *)calloc(strlen(file_str)+1,sizeof(char));
+      val_parse = (char *)calloc(strlen(file_str)+1,sizeof(char));
+      i=0;
+      while(file_str[i]!=' ')
+	var_parse[i]=file_str[i++];
+      var_parse[i]='\0';
+      i++;
+      if (file_str[i]=='?')
+	{
+	  if (strcmp(var_parse,"driving.speed")==0)
+	    *ptr_unknown_choice='A';
+	  if (strcmp(var_parse,"driving.teeth")==0)
+	    *ptr_unknown_choice='B';
+	  if (strcmp(var_parse,"driven.speed")==0)
+	    *ptr_unknown_choice='C';
+	  if (strcmp(var_parse,"driven.teeth")==0)
+	    *ptr_unknown_choice='D';
+	}
+      else
+	{
+	  j=0;
+	  while(file_str[i]!='\0')
+	    val_parse[j++]=file_str[i++];
+	  val_parse[j]='\0';
+	  if (strcmp(var_parse,"driving.speed")==0)
+	    {
+	      printf("Driving.speed set to %f\n",atof(val_parse));
+	      *driving_speed=atof(val_parse);
+	    }
+	  if (strcmp(var_parse,"driving.teeth")==0)
+	    {
+	      printf("Driving.teeth set to %f\n",atof(val_parse));	      
+	      *driving_teeth=atof(val_parse);
+	    }
+	  if (strcmp(var_parse,"driven.speed")==0)
+	    {
+	      printf("Driven.speed set to %f\n",atof(val_parse));	      
+	      *driven_speed=atof(val_parse);
+	    }
+	  if (strcmp(var_parse,"driven.teeth")==0)
+	    {
+	      printf("Driven.teeth set to %f\n",atof(val_parse));	      
+	      *driven_teeth=atof(val_parse);
+	    }
+	}
+      free(var_parse);
+      free(val_parse);
+    }
+  fclose(fp);
 }
