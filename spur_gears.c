@@ -33,9 +33,9 @@ void spur_gears(char * input_file)
   int i, j;
 
   if (strcmp(input_file,"Does Not Exist")==0)
-    interactive_parse(parameters,&unknown_choice,&driving.speed,&driving.teeth,&driven.speed,&driven.teeth);
+    spur_interactive_parse(parameters,&unknown_choice,&driving.speed,&driving.teeth,&driven.speed,&driven.teeth);
   else
-    file_parse(input_file,&unknown_choice,&driving.speed,&driving.teeth,&driven.speed,&driven.teeth);
+    spur_file_parse(input_file,&unknown_choice,&driving.speed,&driving.teeth,&driven.speed,&driven.teeth);
       
   switch (unknown_choice) {
   case 'A':
@@ -149,7 +149,7 @@ char pick_unknown(char parameters[SPUR_PARAMS][2][64])
   return unknown_choice;
 }
 
-void interactive_parse(char parameters[SPUR_PARAMS][2][64], char * ptr_unknown_choice, float * driving_speed, float * driving_teeth, float * driven_speed, float * driven_teeth)
+void spur_interactive_parse(char parameters[SPUR_PARAMS][2][64], char * ptr_unknown_choice, float * driving_speed, float * driving_teeth, float * driven_speed, float * driven_teeth)
 {
   int i;
   
@@ -187,7 +187,7 @@ void interactive_parse(char parameters[SPUR_PARAMS][2][64], char * ptr_unknown_c
     }
 }
 
-void file_parse(char * input_file, char * ptr_unknown_choice, float * driving_speed, float * driving_teeth, float * driven_speed, float * driven_teeth)
+void spur_file_parse(char * input_file, char * ptr_unknown_choice, float * driving_speed, float * driving_teeth, float * driven_speed, float * driven_teeth)
 {
   FILE * fp;
   char file_str[INPUT_FILE_LINE];
