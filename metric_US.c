@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 #include <assert.h>
@@ -17,7 +18,7 @@ void metric_US(char * input_file)
   if (strcmp(input_file,"Does Not Exist")==0)
     metric_interactive_parse(parameters,&unknown_choice,&dia_pitch,&met_module);
   else
-    metric_file_parse();
+    metric_file_parse(input_file,&unknown_choice,&dia_pitch,&met_module);
   
   switch (unknown_choice){
   case 'M' :
@@ -71,7 +72,51 @@ void metric_interactive_parse(char parameters[UNIT_PARAMS][2][64], char * ptr_un
 }
 
 
-void metric_file_parse(void)
+void metric_file_parse(char * input_file, char * ptr_unknown_choice, double * dia_pitch, double * met_module)
 {
-  printf("TODO\n");
+  FILE * fp;
+  char file_str[INPUT_FILE_LINE];
+  char * var_parse;
+  char * val_parse;
+  int i, j;
+  
+  fp = fopen(input_file, "r"); //open file in read only
+  while(fgets(file_str,INPUT_FILE_LINE,fp))
+    {
+      var_parse = (char *)calloc(strlen(file_str)+1,sizeof(char));
+      val_parse = (char *)calloc(strlen(file_str)+1,sizeof(char));
+      i=0;
+      while(file_str[i]!=' ')
+	var_parse[i]=file_str[i++];
+      var_parse[i]='\0';
+      i++;
+      if (file_str[i]=='?')
+	{
+	  if (strcmp(var_parse,"dia_pitch")==0)
+	    *ptr_unknown_choice='P';
+	  if (strcmp(var_parse,"met_module")==0)
+	    *ptr_unknown_choice='M';
+	}
+      else
+	{
+	  j=0;
+	  while(file_str[i]!='\0')
+	    val_parse[j++]=file_str[i++];
+	  val_parse[j]='\0';
+	  if (strcmp(var_parse,"dia_pitch")==0)
+	    {
+	      printf("Dia_pitch set to %f\n",atof(val_parse));
+	      *dia_pitch=atof(val_parse);
+	    }
+	  if (strcmp(var_parse,"met_module")==0)
+	    {
+	      printf("Met_module set to %f\n",atof(val_parse));
+	      *met_module=atof(val_parse);
+	    }
+	}
+      free(var_parse);
+      free(val_parse);
+    }
+  fclose(fp);
+
 }

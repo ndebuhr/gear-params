@@ -1,2 +1,2 @@
-dia_pitch 45
-met_module ?
+dia_pitch ?
+met_module 0.564
