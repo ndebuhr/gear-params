@@ -12,9 +12,9 @@ void rack_pinion(char * input_file)
   float sVal;
   
   if (strcmp(input_file,"Does Not Exist")==0)
-    rack_interactive_parse(parameters,&unknown_choice,&nVal,&pVal,&sVal);
+    interactive_parse(parameters,&unknown_choice,&nVal,&pVal,&sVal);
   else
-    rack_file_parse(input_file,parameters,&unknown_choice,&nVal,&pVal,&sVal);
+    file_parse(input_file,parameters,&unknown_choice,&nVal,&pVal,&sVal);
 
     
   result=solve_rack_pinion(&unknown_choice,nVal,pVal,sVal);
@@ -73,7 +73,7 @@ float get_s(void)
   return S;
 }
 
-void rack_interactive_parse(char parameters[RACK_PARAMS][2][64],char * unknown_choice, float * nVal, float * pVal, float * sVal)
+static void interactive_parse(char parameters[RACK_PARAMS][2][64],char * unknown_choice, float * nVal, float * pVal, float * sVal)
 {
   int i;
   bool valid_param=false;
@@ -113,7 +113,7 @@ void rack_interactive_parse(char parameters[RACK_PARAMS][2][64],char * unknown_c
   }
 }
 
-void rack_file_parse(char * input_file, char parameters[RACK_PARAMS][2][64],char * unknown_choice, float * nVal, float * pVal, float * sVal)
+static void file_parse(char * input_file, char parameters[RACK_PARAMS][2][64],char * unknown_choice, float * nVal, float * pVal, float * sVal)
 {
   FILE * fp;
   char file_str[INPUT_FILE_LINE];

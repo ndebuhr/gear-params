@@ -4,15 +4,15 @@
 void metric_US(char * input_file)
 {  
   int i;
-  char parameters[UNIT_PARAMS][2][64]={{"M","Module (Metric)"},{"P","Diametral Pitch (US)"}};
+  char parameters[METRIC_PARAMS][2][64]={{"M","Module (Metric)"},{"P","Diametral Pitch (US)"}};
   char unknown_choice;
   char toss_char;
   double dia_pitch, met_module;
 
   if (strcmp(input_file,"Does Not Exist")==0)
-    metric_interactive_parse(parameters,&unknown_choice,&dia_pitch,&met_module);
+    interactive_parse(parameters,&unknown_choice,&dia_pitch,&met_module);
   else
-    metric_file_parse(input_file,&unknown_choice,&dia_pitch,&met_module);
+    file_parse(input_file,&unknown_choice,&dia_pitch,&met_module);
   
   switch (unknown_choice){
   case 'M' :
@@ -29,20 +29,20 @@ void metric_US(char * input_file)
 
 }
 
-void metric_interactive_parse(char parameters[UNIT_PARAMS][2][64], char * ptr_unknown_choice, double * dia_pitch, double * met_module)
+static void interactive_parse(char parameters[METRIC_PARAMS][2][64], char * ptr_unknown_choice, double * dia_pitch, double * met_module)
 {
   int i;
   bool valid_param=false;
 
   printf("Index | Parameter Name\n");    
-  for (i=0;i<UNIT_PARAMS;i++)
+  for (i=0;i<METRIC_PARAMS;i++)
     printf("%4s  | %s\n",parameters[i][0],parameters[i][1]);
 
   while (valid_param==false)
     {
       printf("\nParameter to solve for (enter index): ");
       scanf("%c",ptr_unknown_choice);
-      for (i=0;i<UNIT_PARAMS;i++)
+      for (i=0;i<METRIC_PARAMS;i++)
 	{
 	  if (*ptr_unknown_choice==parameters[i][0][0])
 	    valid_param=true;
@@ -66,7 +66,7 @@ void metric_interactive_parse(char parameters[UNIT_PARAMS][2][64], char * ptr_un
 }
 
 
-void metric_file_parse(char * input_file, char * ptr_unknown_choice, double * dia_pitch, double * met_module)
+static void file_parse(char * input_file, char * ptr_unknown_choice, double * dia_pitch, double * met_module)
 {
   FILE * fp;
   char file_str[INPUT_FILE_LINE];
