@@ -13,7 +13,6 @@
 #include "gear_params.h"
 #include "spur_gears.h"
 #include "rack_pinion.h"
-#include "worm_gear.h"
 #include "metric_US.h"
 
 int main(int argc, char * argv[])
@@ -27,17 +26,15 @@ int main(int argc, char * argv[])
     char mod_ind; //character index for module
     void (*mod_func)(char *); //associated module function
   };
-  struct mod_struct mod_spur_gear, mod_rack_pinion, mod_worm_gear,
+  struct mod_struct mod_spur_gear, mod_rack_pinion,
     mod_metric_US;
   mod_spur_gear.mod_ind='S';
   mod_spur_gear.mod_func=&spur_gears;
   mod_rack_pinion.mod_ind='R';
   mod_rack_pinion.mod_func=&rack_pinion;
-  mod_worm_gear.mod_ind='W';
-  mod_worm_gear.mod_func=&worm_gear;
   mod_metric_US.mod_ind='U';
   mod_metric_US.mod_func=&metric_US;
-  struct mod_struct modules[MODULES]={mod_spur_gear, mod_rack_pinion, mod_worm_gear, mod_metric_US};
+  struct mod_struct modules[MODULES]={mod_spur_gear, mod_rack_pinion, mod_metric_US};
   char * input_file;
   
   if (argc>1)
@@ -94,7 +91,6 @@ char module_choice(char predet)
   char module_options[MODULES][MODULE_PARTS][MODULE_PART_SIZE]=
     {{"S","Spur Gear Train Design"},
      {"R","Rack and Pinion Design"},
-     {"W","Worm Gear Design"},
      {"U","Unit Conversion Module vs. Diametral Pitch"}};
 
   if (predet=='\0')
