@@ -1,19 +1,5 @@
-/************************************************
- * Gear design system
- * Neal DeBuhr
- *
- * Description: Central file for determining user
- * needs, and running corresponding modules
- *************************************************/ 
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
+#include "common.h"
 #include "gear_params.h"
-#include "spur_gears.h"
-#include "rack_pinion.h"
-#include "metric_US.h"
 
 int main(int argc, char * argv[])
 {  

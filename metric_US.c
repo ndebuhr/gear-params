@@ -1,11 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <assert.h>
-#include <math.h>
+#include "common.h"
 #include "metric_US.h"
-
 
 void metric_US(char * input_file)
 {  

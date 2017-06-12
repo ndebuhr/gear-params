@@ -1,15 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <assert.h>
-#include <math.h>
+#include "common.h"
 #include "rack_pinion.h"
-
 
 void rack_pinion(char * input_file)
 {  
-  char parameters[NUM_PARAMS][2][64]={{"N","Number of Teeth"},{"P","Pitch Diameter of Pinion"},{"S","Surface Speed"}};
+  char parameters[RACK_PARAMS][2][64]={{"N","Number of Teeth"},{"P","Pitch Diameter of Pinion"},{"S","Surface Speed"}};
   char unknown_choice;
   float result;
 
@@ -79,21 +73,21 @@ float get_s(void)
   return S;
 }
 
-void rack_interactive_parse(char parameters[NUM_PARAMS][2][64],char * unknown_choice, float * nVal, float * pVal, float * sVal)
+void rack_interactive_parse(char parameters[RACK_PARAMS][2][64],char * unknown_choice, float * nVal, float * pVal, float * sVal)
 {
   int i;
   bool valid_param=false;
   char toss_char;
   
   printf("Index | Parameter Name\n");    
-  for (i=0;i<NUM_PARAMS;i++)
+  for (i=0;i<RACK_PARAMS;i++)
     printf("%4s  | %s\n",parameters[i][0],parameters[i][1]);
 
   while (valid_param==false)
     {
       printf("\nParameter to solve for (enter index): ");
       scanf("%c",unknown_choice);
-      for (i=0;i<NUM_PARAMS;i++)
+      for (i=0;i<RACK_PARAMS;i++)
 	{
 	  if (*unknown_choice==parameters[i][0][0])
 	    valid_param=true;
@@ -119,7 +113,7 @@ void rack_interactive_parse(char parameters[NUM_PARAMS][2][64],char * unknown_ch
   }
 }
 
-void rack_file_parse(char * input_file, char parameters[NUM_PARAMS][2][64],char * unknown_choice, float * nVal, float * pVal, float * sVal)
+void rack_file_parse(char * input_file, char parameters[RACK_PARAMS][2][64],char * unknown_choice, float * nVal, float * pVal, float * sVal)
 {
   FILE * fp;
   char file_str[INPUT_FILE_LINE];

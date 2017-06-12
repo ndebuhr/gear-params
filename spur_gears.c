@@ -1,18 +1,4 @@
-/************************************************
- * Filename: spur_gears.c
- * Neal DeBuhr
- *
- * Description: Determines the gear teeth needed
- * to attain a user-specified output speed, given
- * an input speed and the number of teeth on the
- * first gear
- *************************************************/ 
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <assert.h>
-#include <string.h>
+#include "common.h"
 #include "spur_gears.h"
 
 void spur_gears(char * input_file)
