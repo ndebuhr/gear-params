@@ -1,4 +1,0 @@
-driving.teeth 64
-driving.speed 52
-driven.teeth ?
-driven.speed 100

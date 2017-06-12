@@ -1,2 +1,0 @@
-dia_pitch ?
-met_module 0.564
