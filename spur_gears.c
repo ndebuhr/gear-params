@@ -237,4 +237,5 @@ static void file_parse(char * input_file, char * ptr_unknown_choice, float * dri
       free(val_parse);
     }
   fclose(fp);
+  assert((*driving_speed==0)^(*driving_teeth==0)^(*driven_speed==0)^(*driven_teeth==0));//XOR check on value assignments to exactly 1 unknown
 }

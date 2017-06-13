@@ -77,6 +77,8 @@ static void file_parse(char * input_file, char * ptr_unknown_choice, double * di
   int i, j;
   
   fp = fopen(input_file, "r"); //open file in read only
+  *dia_pitch=0;
+  *met_module=0;
   while(fgets(file_str,INPUT_FILE_LINE,fp))
     {
       var_parse = (char *)calloc(strlen(file_str)+1,sizeof(char));
@@ -116,5 +118,5 @@ static void file_parse(char * input_file, char * ptr_unknown_choice, double * di
       free(val_parse);
     }
   fclose(fp);
-
+  assert((*dia_pitch==0)^(*met_module==0)); //XOR check on value assignments to exactly 1 unknown
 }

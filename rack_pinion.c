@@ -169,4 +169,5 @@ static void file_parse(char * input_file, char parameters[RACK_PARAMS][2][64],ch
       free(val_parse);
     }
   fclose(fp);
+  assert((*nVal==0)^(*pVal==0)^(*sVal==0));//XOR check on value assignments to exactly 1 unknown
 }  
