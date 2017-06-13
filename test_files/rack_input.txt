@@ -1,0 +1,3 @@
+nVal ?
+pVal 32
+sVal 100
