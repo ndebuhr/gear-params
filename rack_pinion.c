@@ -149,16 +149,19 @@ static void file_parse(char * input_file, char parameters[RACK_PARAMS][2][64],ch
 	  if (strcmp(var_parse,"nVal")==0)
 	    {
 	      printf("nVal set to %f\n",atof(val_parse));
+	      assert(atof(val_parse)>0);
 	      *nVal=atof(val_parse);
 	    }
 	  if (strcmp(var_parse,"pVal")==0)
 	    {
 	      printf("pVal set to %f\n",atof(val_parse));
+	      assert(atof(val_parse)>0);
 	      *pVal=atof(val_parse);
 	    }
 	  if (strcmp(var_parse,"sVal")==0)
 	    {
 	      printf("sVal set to %f\n",atof(val_parse));  
+	      assert(atof(val_parse)>0);
 	      *sVal=atof(val_parse);
 	    }
 	}

@@ -211,21 +211,25 @@ static void file_parse(char * input_file, char * ptr_unknown_choice, float * dri
 	  if (strcmp(var_parse,"driving.speed")==0)
 	    {
 	      printf("Driving.speed set to %f\n",atof(val_parse));
+	      assert(atof(val_parse)>0);
 	      *driving_speed=atof(val_parse);
 	    }
 	  if (strcmp(var_parse,"driving.teeth")==0)
 	    {
 	      printf("Driving.teeth set to %f\n",atof(val_parse));	      
+	      assert(atof(val_parse)>0);
 	      *driving_teeth=atof(val_parse);
 	    }
 	  if (strcmp(var_parse,"driven.speed")==0)
 	    {
 	      printf("Driven.speed set to %f\n",atof(val_parse));	      
+	      assert(atof(val_parse)>0);
 	      *driven_speed=atof(val_parse);
 	    }
 	  if (strcmp(var_parse,"driven.teeth")==0)
 	    {
 	      printf("Driven.teeth set to %f\n",atof(val_parse));	      
+	      assert(atof(val_parse)>0);
 	      *driven_teeth=atof(val_parse);
 	    }
 	}

@@ -56,10 +56,12 @@ static void interactive_parse(char parameters[METRIC_PARAMS][2][64], char * ptr_
   case 'M' :
     printf("Diametral pitch: ");
     scanf("%lf",dia_pitch);
+    assert(dia_pitch>0);
     break;
   case 'P' :
     printf("Module: ");
     scanf("%lf",met_module);
+    assert(met_module>0);
     break;
   }
 
@@ -100,11 +102,13 @@ static void file_parse(char * input_file, char * ptr_unknown_choice, double * di
 	  if (strcmp(var_parse,"dia_pitch")==0)
 	    {
 	      printf("Dia_pitch set to %f\n",atof(val_parse));
+	      assert(atof(val_parse)>0);
 	      *dia_pitch=atof(val_parse);
 	    }
 	  if (strcmp(var_parse,"met_module")==0)
 	    {
 	      printf("Met_module set to %f\n",atof(val_parse));
+	      assert(atof(val_parse)>0);
 	      *met_module=atof(val_parse);
 	    }
 	}
