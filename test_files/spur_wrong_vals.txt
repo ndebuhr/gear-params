@@ -1,0 +1,4 @@
+driving.teeth 64
+driving.speed ?
+driven.teeth ?
+driven.speed 100

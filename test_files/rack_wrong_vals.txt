@@ -1,0 +1,3 @@
+nVal 87
+pVal 32
+sVal 100
