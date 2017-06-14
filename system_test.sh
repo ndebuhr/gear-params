@@ -1,52 +1,25 @@
 #!/usr/bin/env bash
 
-make
+module_char="$1"
+input_file="$2"
+output_file="$3"
+expected_file="$4"
 
-./gear_params -m S -i test_files/spur_input.txt > spur_output.txt
-./gear_params -m R -i test_files/rack_input.txt > rack_output.txt
-./gear_params -m U -i test_files/metric_input.txt > metric_output.txt
+./gear_params -m "$module_char" -i "$input_file" >> "$output_file" 2>&1
 
-make clean
-
-num_spur=$(wc -l test_files/spur_expected.txt | sed 's/^\([0-9]*\)\(.*\)$/\1/g')
-for i in $(seq 1 1 $num_spur)
+num_exp_strings=$(wc -l "$input_file" | sed 's/^\([0-9]*\)\(.*\)$/\1/g')
+for i in $(seq 1 1 $num_exp_strings)
 do
-    line_check=$(head -n $i test_files/spur_expected.txt | tail -n 1)
-    spur_check=$(grep -c $line_check spur_output.txt)
-    if (( spur_check <1 ))
+    line_check=$(head -n $i "$expected_file" | tail -n 1)
+    exp_check=$(grep -c $line_check "$output_file")
+    if (( exp_check <1 ))
     then
-	echo "Test failed spur_output.txt"
-	exit 1
-    fi
-done
-    
-num_rack=$(wc -l test_files/rack_expected.txt | sed 's/^\([0-9]*\)\(.*\)$/\1/g')
-for i in $(seq 1 1 $num_rack)
-do
-    line_check=$(head -n $i test_files/rack_expected.txt | tail -n 1)
-    rack_check=$(grep -c $line_check rack_output.txt)
-    if (( rack_check <1 ))
-    then
-	echo "Test failed rack_output.txt"
+	echo "Test failed $output_file"
 	exit 1
     fi
 done
 
-num_metric=$(wc -l test_files/metric_expected.txt | sed 's/^\([0-9]*\)\(.*\)$/\1/g')
-for i in $(seq 1 1 $num_metric)
-do
-    line_check=$(head -n $i test_files/metric_expected.txt | tail -n 1)
-    metric_check=$(grep -c $line_check metric_output.txt)
-    if (( metric_check <1 ))
-    then
-	echo "Test failed metric_output.txt"
-	exit 1
-    fi
-done
-
-rm spur_output.txt rack_output.txt metric_output.txt
+rm "$output_file"
 
 echo "Test passed"
 exit 0
-    
-   
