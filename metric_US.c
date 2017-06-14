@@ -7,7 +7,8 @@ void metric_US(char * input_file)
   char parameters[METRIC_PARAMS][2][64]={{"M","Module (Metric)"},{"P","Diametral Pitch (US)"}};
   char unknown_choice='\0';
   char toss_char;
-  double dia_pitch, met_module;
+  double dia_pitch=0;
+  double met_module=0;
 
   if (strcmp(input_file,"Does Not Exist")==0)
     interactive_parse(parameters,&unknown_choice,&dia_pitch,&met_module);
@@ -84,7 +85,7 @@ static void file_parse(char * input_file, char * unknown_choice, double * dia_pi
       var_parse = (char *)calloc(strlen(file_str)+1,sizeof(char));
       val_parse = (char *)calloc(strlen(file_str)+1,sizeof(char));
       i=0;
-      while(file_str[i]!=' ')
+      while(file_str[i]!=' ' && file_str[i]!='\0')
 	var_parse[i]=file_str[i++];
       var_parse[i]='\0';
       i++;

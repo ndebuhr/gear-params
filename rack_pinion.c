@@ -7,9 +7,9 @@ void rack_pinion(char * input_file)
   char unknown_choice='\0';
   float result;
 
-  float nVal;
-  float pVal;
-  float sVal;
+  float nVal=0;
+  float pVal=0;
+  float sVal=0;
   
   if (strcmp(input_file,"Does Not Exist")==0)
     interactive_parse(parameters,&unknown_choice,&nVal,&pVal,&sVal);
@@ -127,7 +127,7 @@ static void file_parse(char * input_file, char parameters[RACK_PARAMS][2][64],ch
       var_parse = (char *)calloc(strlen(file_str)+1,sizeof(char));
       val_parse = (char *)calloc(strlen(file_str)+1,sizeof(char));
       i=0;
-      while(file_str[i]!=' ')
+      while(file_str[i]!=' ' && file_str[i]!='\0')
 	var_parse[i]=file_str[i++];
       var_parse[i]='\0';
       i++;

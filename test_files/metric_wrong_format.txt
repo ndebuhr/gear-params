@@ -1,4 +1,3 @@
-Vals:
-dia_pitch ?
-met_module 0.564
+? dia_pitch
+0.564 met_module
 

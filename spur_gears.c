@@ -6,12 +6,10 @@ void spur_gears(char * input_file)
   struct spur {
     float speed;
     float teeth;
-    int rSpeed;
-    int rTeeth;
   };
 
-  struct spur driving;
-  struct spur driven;
+  struct spur driving={0,0};
+  struct spur driven={0,0};
 
   char parameters[SPUR_PARAMS][2][64]={{"A","Driving Gear Speed"},{"B","Driving Gear Number of Teeth"},{"C","Driven Gear Speed"},{"D","Driven Gear Number of Teeth"}};
   bool valid_param=false;
@@ -187,7 +185,7 @@ static void file_parse(char * input_file, char * unknown_choice, float * driving
       var_parse = (char *)calloc(strlen(file_str)+1,sizeof(char));
       val_parse = (char *)calloc(strlen(file_str)+1,sizeof(char));
       i=0;
-      while(file_str[i]!=' ')
+      while(file_str[i]!=' ' && file_str[i]!='\0')
 	var_parse[i]=file_str[i++];
       var_parse[i]='\0';
       i++;
