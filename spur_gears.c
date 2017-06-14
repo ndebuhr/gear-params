@@ -15,7 +15,7 @@ void spur_gears(char * input_file)
 
   char parameters[SPUR_PARAMS][2][64]={{"A","Driving Gear Speed"},{"B","Driving Gear Number of Teeth"},{"C","Driven Gear Speed"},{"D","Driven Gear Number of Teeth"}};
   bool valid_param=false;
-  char unknown_choice;
+  char unknown_choice='\0';
   int i, j;
 
   if (strcmp(input_file,"Does Not Exist")==0)
@@ -173,7 +173,7 @@ static void interactive_parse(char parameters[SPUR_PARAMS][2][64], char * ptr_un
     }
 }
 
-static void file_parse(char * input_file, char * ptr_unknown_choice, float * driving_speed, float * driving_teeth, float * driven_speed, float * driven_teeth)
+static void file_parse(char * input_file, char * unknown_choice, float * driving_speed, float * driving_teeth, float * driven_speed, float * driven_teeth)
 {
   FILE * fp;
   char file_str[INPUT_FILE_LINE];
@@ -194,13 +194,13 @@ static void file_parse(char * input_file, char * ptr_unknown_choice, float * dri
       if (file_str[i]=='?')
 	{
 	  if (strcmp(var_parse,"driving.speed")==0)
-	    *ptr_unknown_choice='A';
+	    *unknown_choice='A';
 	  if (strcmp(var_parse,"driving.teeth")==0)
-	    *ptr_unknown_choice='B';
+	    *unknown_choice='B';
 	  if (strcmp(var_parse,"driven.speed")==0)
-	    *ptr_unknown_choice='C';
+	    *unknown_choice='C';
 	  if (strcmp(var_parse,"driven.teeth")==0)
-	    *ptr_unknown_choice='D';
+	    *unknown_choice='D';
 	}
       else
 	{
@@ -238,4 +238,5 @@ static void file_parse(char * input_file, char * ptr_unknown_choice, float * dri
     }
   fclose(fp);
   assert((*driving_speed==0)^(*driving_teeth==0)^(*driven_speed==0)^(*driven_teeth==0));//XOR check on value assignments to exactly 1 unknown
+  assert(*unknown_choice!='\0'); //Ensure unknown variable was specified
 }

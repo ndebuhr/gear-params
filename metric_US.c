@@ -5,7 +5,7 @@ void metric_US(char * input_file)
 {  
   int i;
   char parameters[METRIC_PARAMS][2][64]={{"M","Module (Metric)"},{"P","Diametral Pitch (US)"}};
-  char unknown_choice;
+  char unknown_choice='\0';
   char toss_char;
   double dia_pitch, met_module;
 
@@ -68,7 +68,7 @@ static void interactive_parse(char parameters[METRIC_PARAMS][2][64], char * ptr_
 }
 
 
-static void file_parse(char * input_file, char * ptr_unknown_choice, double * dia_pitch, double * met_module)
+static void file_parse(char * input_file, char * unknown_choice, double * dia_pitch, double * met_module)
 {
   FILE * fp;
   char file_str[INPUT_FILE_LINE];
@@ -91,9 +91,9 @@ static void file_parse(char * input_file, char * ptr_unknown_choice, double * di
       if (file_str[i]=='?')
 	{
 	  if (strcmp(var_parse,"dia_pitch")==0)
-	    *ptr_unknown_choice='P';
+	    *unknown_choice='P';
 	  if (strcmp(var_parse,"met_module")==0)
-	    *ptr_unknown_choice='M';
+	    *unknown_choice='M';
 	}
       else
 	{
@@ -119,4 +119,5 @@ static void file_parse(char * input_file, char * ptr_unknown_choice, double * di
     }
   fclose(fp);
   assert((*dia_pitch==0)^(*met_module==0)); //XOR check on value assignments to exactly 1 unknown
+  assert(*unknown_choice!='\0'); //Ensure unknown variable was specified
 }

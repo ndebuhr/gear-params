@@ -4,7 +4,7 @@
 void rack_pinion(char * input_file)
 {  
   char parameters[RACK_PARAMS][2][64]={{"N","Number of Teeth"},{"P","Pitch Diameter of Pinion"},{"S","Surface Speed"}};
-  char unknown_choice;
+  char unknown_choice='\0';
   float result;
 
   float nVal;
@@ -170,4 +170,5 @@ static void file_parse(char * input_file, char parameters[RACK_PARAMS][2][64],ch
     }
   fclose(fp);
   assert((*nVal==0)^(*pVal==0)^(*sVal==0));//XOR check on value assignments to exactly 1 unknown
+  assert(*unknown_choice!='\0'); //Ensure unknown variable was specified
 }  
