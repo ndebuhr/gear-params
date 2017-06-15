@@ -1,4 +1,5 @@
 import subprocess
+import sys
 
 class module_test:
     def __init__(self, module_char, input_file, output_file, expected_file):
@@ -67,7 +68,12 @@ for i in range(0,len(tests)):
                         tests[i].m,
                         tests[i].i,
                         tests[i].o,
-                        tests[i].e])
+                        tests[i].e,
+                        '> test_'+str(i)+'.txt'])
     subprocess.call(bash_test,shell=True)
+    if 'Test failed' in open('test_'+str(i)+'.txt').read():
+        sys.exit()
+    print('rm test_'+str(i)+'.txt')
+    subprocess.call('rm test_'+str(i)+'.txt',shell=True)
 
 subprocess.call('make clean',shell=True)
