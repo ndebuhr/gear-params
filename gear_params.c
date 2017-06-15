@@ -3,24 +3,24 @@
 
 int main(int argc, char * argv[])
 {  
-  char module_index;
+  char mod_choice;
   int i;
-  int j=0;
+  int j;
   bool mod_specified=false;
-  bool in_file_specified=false;
-  struct mod_struct {
-    char mod_ind; //character index for module
-    void (*mod_func)(char *); //associated module function
+  bool input_file_exists=false;
+  struct gear_mod {
+    char index; //character index for module
+    void (*func)(char *); //associated module function
   };
-  struct mod_struct mod_spur_gear, mod_rack_pinion,
+  struct gear_mod mod_spur_gear, mod_rack_pinion,
     mod_metric_US;
-  mod_spur_gear.mod_ind='S';
-  mod_spur_gear.mod_func=&spur_gears;
-  mod_rack_pinion.mod_ind='R';
-  mod_rack_pinion.mod_func=&rack_pinion;
-  mod_metric_US.mod_ind='U';
-  mod_metric_US.mod_func=&metric_US;
-  struct mod_struct modules[MODULES]={mod_spur_gear, mod_rack_pinion, mod_metric_US};
+  mod_spur_gear.index='S';
+  mod_spur_gear.func=&spur_gears;
+  mod_rack_pinion.index='R';
+  mod_rack_pinion.func=&rack_pinion;
+  mod_metric_US.index='U';
+  mod_metric_US.func=&metric_US;
+  struct gear_mod modules[MODULES]={mod_spur_gear, mod_rack_pinion, mod_metric_US};
   char * input_file;
   
   if (argc>1)
@@ -29,7 +29,7 @@ int main(int argc, char * argv[])
 	{
 	  if ( strcmp(argv[i],"-m") == 0)
 	    {
-	      module_index = ((i+1<argc) ? module_choice(argv[i+1][0]) : module_choice('\0')); //if flag, then ignore, if option, then read
+	      mod_choice = ((i+1<argc) ? choose_mod(argv[i+1][0]) : choose_mod('\0')); //if flag, then ignore, if option, then read
 	      mod_specified = true;
 	    }
 	  if ( strcmp(argv[i],"-i") == 0)
@@ -37,38 +37,39 @@ int main(int argc, char * argv[])
 	      if (i+1<argc)
 		{
 		  input_file = (char *)calloc(strlen(argv[i+1])+1,sizeof(char));
+		  j=0;
 		  while (argv[i+1][j]!='\0') {
 		    input_file[j]=argv[i+1][j];
 		    j++;
 		  }
 		  input_file[j]='\0';
 		  printf("Input file: %s\n",input_file);
-		  in_file_specified=true;
+		  input_file_exists=true;
 		}
 	    }
 	}
       if (mod_specified==false)
-	module_index=module_choice('\0'); //command line module specification incorrectly formatted (ignore it)
+	mod_choice=choose_mod('\0'); //command line module specification incorrectly formatted (ignore it)
     }
   else
-    module_index=module_choice('\0'); //command line module not specified
+    mod_choice=choose_mod('\0'); //command line module not specified
 
-  if (in_file_specified==false)
+  if (input_file_exists==false)
     {
       input_file = (char *)calloc(strlen("Does Not Exist")+1,sizeof(char));
       strcpy(input_file, "Does Not Exist");
     }
   for (i=0; i<MODULES; i++)
     {
-      if (module_index==modules[i].mod_ind) //if specified module matches the ith module index
-	(*modules[i].mod_func)(input_file); //run corresponding module function
+      if (mod_choice==modules[i].index) //if specified module matches the ith module index
+	(*modules[i].func)(input_file); //run corresponding module function
     }
 
   free(input_file);
   return 0;
 }
 
-char module_choice(char predet)
+char choose_mod(char predet)
 {
   int i;
   char user_choice;
